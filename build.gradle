@@ -1,70 +1,17 @@
 plugins {
 	id 'java'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'org.springframework.boot' version '2.5.4'
-	id 'org.owasp.dependencycheck' version '6.3.1'
 }
 
 sourceCompatibility = 1.11
 
-group = 'com.liebherr.ldc.cot'
+group = 'de.florianmaier.jlox'
 version = '0.0.1-SNAPSHOT'
 
 repositories {
 	mavenCentral()
 }
 
-List springBoot = [
-		"org.springframework.boot:spring-boot-starter-webflux",
-		"org.springframework.boot:spring-boot-starter-actuator",
-		"org.springframework.boot:spring-boot-starter-security",
-		"org.springframework.boot:spring-boot-starter-data-jpa"
-]
-
-List tracing = [
-        "org.springframework.cloud:spring-cloud-starter-sleuth:3.0.3"
-]
-
-List security = [
-		"com.auth0:java-jwt:3.18.1",
-		"com.auth0:jwks-rsa:0.19.0"
-]
-
-List postgresql = [
-    "org.postgresql:postgresql:42.2.23"
-]
-
-def micrometerVersion = "1.7.3"
-List micrometer = [
-		"io.micrometer:micrometer-core:${micrometerVersion}",
-		"io.micrometer:micrometer-registry-prometheus:${micrometerVersion}"
-]
-
-def apacheVersion = "3.12.0"
-List apache = [
-		"org.apache.commons:commons-lang3:${apacheVersion}"
-]
-
-List h2 = [
-        "com.h2database:h2:1.4.200",
-        "org.hibernate:hibernate-java8:5.5.7.Final"
-]
-
-List springTest = [
-		"org.springframework.boot:spring-boot-starter-test",
-		"io.projectreactor:reactor-test"
-]
-
 dependencies {
-	implementation springBoot
-	implementation tracing
-	implementation security
-	implementation postgresql
-	implementation h2
-	implementation micrometer
-	implementation apache
-
-	testImplementation springTest
 }
 
 test {
@@ -75,9 +22,3 @@ jar {
     enabled = false
 }
 
-dependencyCheck {
-	failBuildOnCVSS = 7
-	failOnError = false
-	format = "ALL"
-	//suppressionFile = "dependency-check-suppressions.xml"
-}
