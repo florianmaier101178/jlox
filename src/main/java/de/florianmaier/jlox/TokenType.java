@@ -1,6 +1,6 @@
 package de.florianmaier.jlox;
 
-public enum TokenType {
+enum TokenType {
 
     //Single-char tokens
     LEFT_PAREN, RIGHT_PAREN,

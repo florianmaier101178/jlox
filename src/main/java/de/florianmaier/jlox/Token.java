@@ -1,6 +1,6 @@
 package de.florianmaier.jlox;
 
-public class Token {
+class Token {
 
     final TokenType type;
     final String lexeme;
