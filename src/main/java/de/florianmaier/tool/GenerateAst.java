@@ -31,6 +31,9 @@ public class GenerateAst {
         writer.println("abstract class " + baseName + " {");
         writer.println();
 
+        defineVisitor(writer, baseName, types);
+        writer.println();
+
         //The AST classes
         for (String type : types) {
             String className = type.split(":")[0].trim();
@@ -39,8 +42,22 @@ public class GenerateAst {
             writer.println();
         }
 
+        //The base accept() method
+        writer.println("\tabstract <R> R accept(Visitor<R> visitor);");
+
         writer.println("}");
         writer.close();
+    }
+
+    private static void defineVisitor(PrintWriter writer, String baseName, List<String> types) {
+        writer.println("\tinterface Visitor<R> {");
+
+        for (String type : types) {
+            String typeName = type.split(":")[0].trim();
+            writer.println("\t\tR visit" + typeName + baseName + "(" + typeName + " " + baseName.toUpperCase() + ");");
+        }
+
+        writer.println("\t}");
     }
 
     private static void defineType(PrintWriter writer, String baseName, String className, String fieldList) {
@@ -62,7 +79,13 @@ public class GenerateAst {
             String name = field.split(" ")[1];
             writer.println("\t\t\tthis." + name + " = " + name + ";");
         }
+        writer.println("\t\t}");
 
+        //Visitor pattern
+        writer.println();
+        writer.println("\t\t@Override");
+        writer.println("\t\t<R> R accept(Visitor<R> visitor) {");
+        writer.println("\t\t\treturn visitor.visit" + className + baseName + "(this);");
         writer.println("\t\t}");
 
         writer.println("\t}");
